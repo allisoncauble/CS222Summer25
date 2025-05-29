@@ -1,0 +1,64 @@
+def load_students(filename):
+    students = {}
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                parts = line.strip().split(',')
+                if len(parts) != 5:
+                    continue  # Skip lines that don't have exactly 5 fields
+                student_id, last_name, first_name, major, gpa = parts
+                students[student_id] = [last_name, first_name, major, gpa]
+    except FileNotFoundError:
+        print(f"Error: The file '{filename}' was not found.")
+    return students
+
+def search_by_last_name(students, last_name):
+    results = []
+    for student_id, info in students.items():
+        if info[0].lower() == last_name.lower():
+            results.append((student_id, *info))
+    return results
+
+def search_by_major(students, major):
+    results = []
+    for student_id, info in students.items():
+        if info[2].lower() == major.lower():
+            results.append((student_id, *info))
+    return results
+
+def display_students(students_list):
+    if not students_list:
+        print("No matching students found.")
+    else:
+        for student in students_list:
+            print(f"ID: {student[0]}, Last Name: {student[1]}, First Name: {student[2]}, Major: {student[3]}, GPA: {student[4]}")
+
+def main():
+    filename = 'students.txt'
+    students = load_students(filename)
+    if not students:
+        return
+
+    while True:
+        print("\nChoose an option:")
+        print("1) Search by Last Name")
+        print("2) Search by Major")
+        print("3) Quit")
+        choice = input("Enter your choice (1-3): ").strip()
+
+        if choice == '1':
+            last_name = input("Enter last name to search for: ").strip()
+            results = search_by_last_name(students, last_name)
+            display_students(results)
+        elif choice == '2':
+            major = input("Enter major to search for: ").strip()
+            results = search_by_major(students, major)
+            display_students(results)
+        elif choice == '3':
+            print("Exiting the program.")
+            break
+        else:
+            print("Invalid choice. Please enter 1, 2, or 3.")
+
+if __name__ == "__main__":
+    main()
