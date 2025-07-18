@@ -1,7 +1,7 @@
 import sys
 import requests
 
-USER_AGENT = "WikipediaRevisionTrackerApp (your@email.com)"
+USER_AGENT = "WikipediaRevisionTrackerApp (allisoncauble123@gmail.com)"
 API_URL = "https://en.wikipedia.org/w/api.php"
 
 def get_revisions(title):
